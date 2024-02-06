@@ -1,3 +1,6 @@
+import './style.css';
+import updateWeatherData from './weatherDisplay';
+
 async function getWeather(cityLocation) {
   try {
     const response = await fetch(
@@ -48,8 +51,12 @@ function requestWeather(event) {
       },
       (error) => console.log(error),
     )
-    .then((dataObject) => console.log(dataObject));
+    .then((processedData) => {
+      updateWeatherData(processedData);
+      console.log(processedData);
+    })
+    .catch((error) => console.log(error));
 }
 
-const searchBar = document.querySelector('.search-bar');
+const searchBar = document.querySelector('#search-bar');
 searchBar.addEventListener('search', requestWeather);
