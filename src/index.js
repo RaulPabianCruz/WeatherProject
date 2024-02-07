@@ -1,5 +1,5 @@
 import './style.css';
-import updateWeatherData from './weatherDisplay';
+import { updateWeatherData, toggleTempDisplay } from './weatherDisplay';
 
 async function getWeather(cityLocation) {
   try {
@@ -31,8 +31,7 @@ function processForecastDays(forecastArray) {
   return newArray;
 }
 
-function requestWeather(event) {
-  const regionName = event.target.value;
+function requestWeather(regionName) {
   const weatherPromise = getWeather(regionName);
   weatherPromise
     .then(
@@ -59,4 +58,11 @@ function requestWeather(event) {
 }
 
 const searchBar = document.querySelector('#search-bar');
-searchBar.addEventListener('search', requestWeather);
+searchBar.addEventListener('search', (event) => {
+  requestWeather(event.target.value);
+});
+
+const toggleBttn = document.querySelector('.temp-toggle');
+toggleBttn.addEventListener('click', toggleTempDisplay);
+
+requestWeather('Lancaster');

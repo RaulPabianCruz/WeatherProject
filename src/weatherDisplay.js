@@ -1,3 +1,40 @@
+let isTempCelsius = false;
+let tempInCelsius = 0;
+let tempInFarenheit = 0;
+
+function displayTempInCelsius() {
+  const celsiusText = document.querySelector('.temp-display');
+  celsiusText.textContent = `Average Temperature: ${tempInCelsius}${String.fromCharCode(
+    176,
+  )}C`;
+
+  const toggleBttn = document.querySelector('.temp-toggle');
+  toggleBttn.textContent = 'Change to Farenheit';
+}
+
+function displayTempInFarenheit() {
+  const farenheitText = document.querySelector('.temp-display');
+  farenheitText.textContent = `Average Temperature: ${tempInFarenheit}${String.fromCharCode(
+    176,
+  )}F`;
+
+  const toggleBttn = document.querySelector('.temp-toggle');
+  toggleBttn.textContent = 'Change to Celsius';
+}
+
+function displayTemp() {
+  if (isTempCelsius) {
+    displayTempInCelsius();
+  } else {
+    displayTempInFarenheit();
+  }
+}
+
+function toggleTempDisplay() {
+  isTempCelsius = !isTempCelsius;
+  displayTemp();
+}
+
 function updateWeatherData(weatherData) {
   const locationText = document.querySelector('.location-header');
   locationText.textContent = `${weatherData.city}, ${weatherData.state}`;
@@ -8,11 +45,14 @@ function updateWeatherData(weatherData) {
   const conditionIcon = document.querySelector('.condition-icon');
   conditionIcon.src = weatherData.weatherDataArray[0].conditionIcon;
 
-  const celsiusText = document.querySelector('.temp.celsius');
-  celsiusText.textContent = weatherData.weatherDataArray[0].tempCelsius;
-
-  const farenheitText = document.querySelector('.temp.farenheit');
-  farenheitText.textContent = weatherData.weatherDataArray[0].tempFarenheit;
+  tempInCelsius = weatherData.weatherDataArray[0].tempCelsius;
+  tempInFarenheit = weatherData.weatherDataArray[0].tempFarenheit;
+  displayTemp();
 }
 
-export default updateWeatherData;
+function clearSearchField() {
+  const searchField = document.querySelector('#search-bar');
+  searchField.value = '';
+}
+
+export { updateWeatherData, toggleTempDisplay, clearSearchField };
