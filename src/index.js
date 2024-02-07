@@ -1,5 +1,9 @@
 import './style.css';
-import { updateWeatherData, toggleTempDisplay } from './weatherDisplay';
+import {
+  updateWeatherData,
+  toggleTempDisplay,
+  clearSearchField,
+} from './weatherDisplay';
 
 async function getWeather(cityLocation) {
   try {
@@ -54,7 +58,10 @@ function requestWeather(regionName) {
       updateWeatherData(processedData);
       console.log(processedData);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      clearSearchField();
+    });
 }
 
 const searchBar = document.querySelector('#search-bar');
